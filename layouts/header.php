@@ -4,9 +4,9 @@
             <div class="row align-items-center">
 
                 <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-                    <form action="" class="site-block-top-search">
+                    <form action="shop.php" method="post" class="site-block-top-search">
                         <span class="icon icon-search2"></span>
-                        <input type="text" class="form-control border-0" placeholder="Search">
+                        <input type="search" name="search" class="form-control border-0" placeholder="Ingresa el nombre del producto...">
                     </form>
                 </div>
 
@@ -63,17 +63,17 @@
                     </ul>
                 </li>
                 <li class="has-children">
-                    <a href="about.html">Acerca de</a>
+                    <a href="about.php">Acerca de</a>
                     <ul class="dropdown">
                         <li><a href="#">Menu One</a></li>
                         <li><a href="#">Menu Two</a></li>
                         <li><a href="#">Menu Three</a></li>
                     </ul>
                 </li>
-                <li class="active"><a href="shop.php">Tienda</a></li>
+                <li><a href="shop.php">Tienda</a></li>
                 <li><a href="#">Catalogo</a></li>
                 <li><a href="#">Lo más nuevo</a></li>
-                <li><a href="contact.html">Contacto</a></li>
+                <li><a href="./contact.php">Contacto</a></li>
             </ul>
         </div>
     </nav>

@@ -39,8 +39,6 @@ $arreglo = $_SESSION['shopping_cart'];
 <body>
 
   <div class="site-wrap">
-    <?php include('layouts/header.php') ?>
-
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">

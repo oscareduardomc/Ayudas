@@ -1,10 +1,5 @@
 <?php
 include "conexion.php";
-
-
-$queryColor = mysqli_query($conex, "SELECT * FROM tbl_color");
-$queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +49,15 @@ $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
             <div class="row">
               <div class="col-md-12 mb-5">
                 <div class="float-md-left mb-4">
-                  <h2 class="text-black h5">Todos los productos</h2>
+                  <?php
+                  if (isset($_POST['search'])) {    
+                    $searchq = $_POST['search'];  
+                  ?>
+                    <h2 class="h5">Resultados para <span class="text-black">"<?php echo $searchq ?>"</span></h2>
+                  <?php
+                    }
+                  ?>
+                  
                 </div>
                 <div class="d-flex">
                   <div class="dropdown mr-1 ml-md-auto">
@@ -91,22 +94,26 @@ $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
             </div>
             <div class="row mb-5">
               <?php
-              if (isset($_GET['id'])) {
+              if (isset($_POST['search'])) {
+                $searchq = $_POST['search'];
+                $searchq = preg_replace("#[^0-9a-z]#i", "", $searchq);
+
+                $query = mysqli_query($conex, "SELECT * FROM tbl_products WHERE name LIKE '%$searchq%'");
+              } elseif (isset($_GET['id'])) {
                 $colorID = $_GET['id'];
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products INNER JOIN tbl_colorxproduct
                 on tbl_products.id = tbl_colorxproduct.idProduct INNER JOIN tbl_color on tbl_colorxproduct.idColor = tbl_color.id WHERE tbl_color.id = $colorID");
-              }elseif (isset($_GET['idCategory'])) {
+              } elseif (isset($_GET['idCategory'])) {
                 $categoryID = $_GET['idCategory'];
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products INNER JOIN tbl_categoryxproduct
                 on tbl_products.id = tbl_categoryxproduct.idProduct INNER JOIN tbl_category on tbl_categoryxproduct.idCategory = tbl_category.id WHERE tbl_category.id = $categoryID");
-              }else{
+              } else {
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products");
               }
+
               $count = mysqli_num_rows($query);
               if ($count > 0) {
                 while ($row = mysqli_fetch_array($query)) {
-                  
-
               ?>
                   <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                     <div class="block-4 text-center border">
@@ -121,8 +128,8 @@ $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
                     </div>
                   </div>
               <?php
-                  }
                 }
+              }
               ?>
             </div>
 
@@ -148,11 +155,16 @@ $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Categorías</h3>
               <ul class="list-unstyled mb-0">
                 <?php
+                $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
+
+                $count = mysqli_num_rows($queryCategory);
+                if ($count > 0) {
                   while ($row = mysqli_fetch_array($queryCategory)) {
                 ?>
-                <li class="mb-1"><a href="shop.php?idCategory=<?php echo $row["id"] ?>" class="d-flex"><span><?php echo $row["categoryName"] ?></span> <span class="text-black ml-auto">(2,220)</span></a></li>
+                  <li class="mb-1"><a href="shop.php?idCategory=<?php echo $row["id"] ?>" class="d-flex"><span><?php echo $row["categoryName"] ?></span> <span class="text-black ml-auto">(2,220)</span></a></li>
                 <?php
                   }
+                }
                 ?>
               </ul>
             </div>
@@ -180,6 +192,10 @@ $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
                 <?php
+                $queryColor = mysqli_query($conex, "SELECT * FROM tbl_color");
+
+                $count = mysqli_num_rows($queryColor);
+                if ($count > 0) {
                   while ($row = mysqli_fetch_array($queryColor)) {
                 ?>
                   <a href="shop.php?id=<?php echo $row["id"] ?>" class="d-flex color-item align-items-center">
@@ -188,6 +204,7 @@ $queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
                   </a>
                 <?php
                   }
+                }
                 ?>
               </div>
 
