@@ -99,14 +99,14 @@ include "conexion.php";
                 $searchq = preg_replace("#[^0-9a-z]#i", "", $searchq);
 
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products WHERE name LIKE '%$searchq%'");
-              } elseif (isset($_GET['id'])) {
-                $colorID = $_GET['id'];
+              } elseif (isset($_GET['idColor'])) {
+                $colorID = $_GET['idColor'];
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products INNER JOIN tbl_colorxproduct
-                on tbl_products.id = tbl_colorxproduct.idProduct INNER JOIN tbl_color on tbl_colorxproduct.idColor = tbl_color.id WHERE tbl_color.id = $colorID");
+                on tbl_products.id = tbl_colorxproduct.idProduct INNER JOIN tbl_color on tbl_colorxproduct.idColor = tbl_color.idColor WHERE tbl_color.idColor = $colorID");
               } elseif (isset($_GET['idCategory'])) {
                 $categoryID = $_GET['idCategory'];
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products INNER JOIN tbl_categoryxproduct
-                on tbl_products.id = tbl_categoryxproduct.idProduct INNER JOIN tbl_category on tbl_categoryxproduct.idCategory = tbl_category.id WHERE tbl_category.id = $categoryID");
+                on tbl_products.id = tbl_categoryxproduct.idProduct INNER JOIN tbl_category on tbl_categoryxproduct.idCategory = tbl_category.idCategory WHERE tbl_category.idCategory = $categoryID");
               } else {
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products");
               }
@@ -161,7 +161,7 @@ include "conexion.php";
                 if ($count > 0) {
                   while ($row = mysqli_fetch_array($queryCategory)) {
                 ?>
-                  <li class="mb-1"><a href="shop.php?idCategory=<?php echo $row["id"] ?>" class="d-flex"><span><?php echo $row["categoryName"] ?></span> <span class="text-black ml-auto">(2,220)</span></a></li>
+                  <li class="mb-1"><a href="shop.php?idCategory=<?php echo $row["idCategory"] ?>" class="d-flex"><span><?php echo $row["categoryName"] ?></span> <span class="text-black ml-auto">(2,220)</span></a></li>
                 <?php
                   }
                 }
@@ -198,7 +198,7 @@ include "conexion.php";
                 if ($count > 0) {
                   while ($row = mysqli_fetch_array($queryColor)) {
                 ?>
-                  <a href="shop.php?id=<?php echo $row["id"] ?>" class="d-flex color-item align-items-center">
+                  <a href="shop.php?idColor=<?php echo $row["idColor"] ?>" class="d-flex color-item align-items-center">
                     <span class="color d-inline-block rounded-circle mr-2" style="background-color: #<?php echo $row["codColor"] ?>;"></span> <span class="text-black"><?php echo $row["colorName"] ?>
                       (2,429)</span>
                   </a>
