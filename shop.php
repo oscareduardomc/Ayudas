@@ -30,7 +30,7 @@
 
   <div class="site-wrap">
     
-  <?php include('layouts/header.php') ?>
+    <?php include('layouts/header.php') ?>
 
     <div class="bg-light py-3">
       <div class="container">
