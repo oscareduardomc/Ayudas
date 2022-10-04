@@ -1,5 +1,10 @@
 <?php
-    include "conexion.php";
+include "conexion.php";
+
+
+$queryColor = mysqli_query($conex, "SELECT * FROM tbl_color");
+$queryCategory = mysqli_query($conex, "SELECT * FROM tbl_category");
+
 ?>
 
 <!DOCTYPE html>
@@ -29,14 +34,13 @@
 <body>
 
   <div class="site-wrap">
-    
+
     <?php include('layouts/header.php') ?>
 
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.php">Inicio</a> <span class="mx-2 mb-0">/</span> <strong
-              class="text-black">Tienda</strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Inicio</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Tienda</strong></div>
         </div>
       </div>
     </div>
@@ -54,29 +58,25 @@
                 </div>
                 <div class="d-flex">
                   <div class="dropdown mr-1 ml-md-auto">
-                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Latest
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                       <?php
-                        $query = mysqli_query($conex, "SELECT * FROM tbl_category");
-                        $count = mysqli_num_rows($query);
-                        if($count > 0)
-                        {
-                          while($row = mysqli_fetch_array($query))
-                          {
+                      $query = mysqli_query($conex, "SELECT * FROM tbl_category");
+                      $count = mysqli_num_rows($query);
+                      if ($count > 0) {
+                        while ($row = mysqli_fetch_array($query)) {
                       ?>
-                      <a class="dropdown-item" href="#"><?php echo $row["categoryName"] ?></a>
+                          <a class="dropdown-item" href="#"><?php echo $row["categoryName"] ?></a>
                       <?php
-                          }
                         }
+                      }
                       ?>
                     </div>
                   </div>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference"
-                      data-toggle="dropdown">Reference</button>
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
                       <a class="dropdown-item" href="#">Relevance</a>
                       <a class="dropdown-item" href="#">Name, A to Z</a>
@@ -91,32 +91,41 @@
             </div>
             <div class="row mb-5">
               <?php
+              if (isset($_GET['id'])) {
+                $colorID = $_GET['id'];
+                $query = mysqli_query($conex, "SELECT * FROM tbl_products INNER JOIN tbl_colorxproduct
+                on tbl_products.id = tbl_colorxproduct.idProduct INNER JOIN tbl_color on tbl_colorxproduct.idColor = tbl_color.id WHERE tbl_color.id = $colorID");
+              }elseif (isset($_GET['idCategory'])) {
+                $categoryID = $_GET['idCategory'];
+                $query = mysqli_query($conex, "SELECT * FROM tbl_products INNER JOIN tbl_categoryxproduct
+                on tbl_products.id = tbl_categoryxproduct.idProduct INNER JOIN tbl_category on tbl_categoryxproduct.idCategory = tbl_category.id WHERE tbl_category.id = $categoryID");
+              }else{
                 $query = mysqli_query($conex, "SELECT * FROM tbl_products");
-                $count = mysqli_num_rows($query);
-                if($count > 0)
-                {
-                  while($row = mysqli_fetch_array($query))
-                  {
+              }
+              $count = mysqli_num_rows($query);
+              if ($count > 0) {
+                while ($row = mysqli_fetch_array($query)) {
+                  
+
               ?>
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.php?id=<?php echo $row["id"] ?>"><img src="images/<?php echo $row["image"] ?>" alt="Image placeholder"
-                        class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.php?id=<?php echo $row["id"] ?>"><?php echo $row["name"] ?></a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">L<?php echo $row["price"] ?></p>
+                  <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                    <div class="block-4 text-center border">
+                      <figure class="block-4-image">
+                        <a href="shop-single.php?id=<?php echo $row["id"] ?>"><img src="images/<?php echo $row["image"] ?>" alt="Image placeholder" class="img-fluid"></a>
+                      </figure>
+                      <div class="block-4-text p-4">
+                        <h3><a href="shop-single.php?id=<?php echo $row["id"] ?>"><?php echo $row["name"] ?></a></h3>
+                        <p class="mb-0">Finding perfect t-shirt</p>
+                        <p class="text-primary font-weight-bold">L<?php echo $row["price"] ?></p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
               <?php
                   }
                 }
               ?>
             </div>
-            
+
             <div class="row" data-aos="fade-up">
               <div class="col-md-12 text-center">
                 <div class="site-block-27">
@@ -139,19 +148,10 @@
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Categorías</h3>
               <ul class="list-unstyled mb-0">
                 <?php
-                  $query = mysqli_query($conex, "SELECT * FROM tbl_category");
-                  $count = mysqli_num_rows($query);
-                  if($count > 0)
-                  {
-                    while($row = mysqli_fetch_array($query))
-                    {
+                  while ($row = mysqli_fetch_array($queryCategory)) {
                 ?>
-
-                <li class="mb-1"><a href="#" class="d-flex"><span><?php echo $row["categoryName"] ?></span> <span
-                      class="text-black ml-auto">(2,220)</span></a></li>
-                
+                <li class="mb-1"><a href="shop.php?idCategory=<?php echo $row["id"] ?>" class="d-flex"><span><?php echo $row["categoryName"] ?></span> <span class="text-black ml-auto">(2,220)</span></a></li>
                 <?php
-                    }
                   }
                 ?>
               </ul>
@@ -180,20 +180,13 @@
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
                 <?php
-                  $query = mysqli_query($conex, "SELECT * FROM tbl_color");
-                  $count = mysqli_num_rows($query);
-                  if($count > 0)
-                  {
-                    while($row = mysqli_fetch_array($query))
-                    {
+                  while ($row = mysqli_fetch_array($queryColor)) {
                 ?>
-                <a href="#" class="d-flex color-item align-items-center">
-                  <span class="color d-inline-block rounded-circle mr-2" style="background-color: #<?php echo $row["codColor"] ?>;"></span> <span class="text-black"><?php echo $row["colorName"] ?>
-                    (2,429)</span>
-                </a>
-                
+                  <a href="shop.php?id=<?php echo $row["id"] ?>" class="d-flex color-item align-items-center">
+                    <span class="color d-inline-block rounded-circle mr-2" style="background-color: #<?php echo $row["codColor"] ?>;"></span> <span class="text-black"><?php echo $row["colorName"] ?>
+                      (2,429)</span>
+                  </a>
                 <?php
-                    }
                   }
                 ?>
               </div>
@@ -319,11 +312,11 @@
             <p>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               Copyright &copy;
-              <script data-cfasync="false"
-                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
-              with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
-                class="text-primary">Colorlib</a>
+              <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>
+                document.write(new Date().getFullYear());
+              </script> All rights reserved | This template is made
+              with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
