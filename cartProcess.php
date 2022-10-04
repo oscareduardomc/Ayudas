@@ -15,8 +15,7 @@ if(isset($_POST["add_to_cart"]))
 				'item_image'			=>	$_POST["hidden_image"],
 				'item_name'			=>	$_POST["hidden_name"],
 				'item_price'		=>	$_POST["hidden_price"],
-				'item_quantity'		=>	$_POST["quantity"],
-				'item_sending'		=>	$_POST["hidden_sending"]
+				'item_quantity'		=>	$_POST["quantity"]
 			);
 			$_SESSION["shopping_cart"][$count] = $item_array;
 		}
@@ -32,8 +31,7 @@ if(isset($_POST["add_to_cart"]))
 			'item_image'			=>	$_POST["hidden_image"],
 			'item_name'			=>	$_POST["hidden_name"],
 			'item_price'		=>	$_POST["hidden_price"],
-			'item_quantity'		=>	$_POST["quantity"],
-			'item_sending'		=>	$_POST["hidden_sending"]
+			'item_quantity'		=>	$_POST["quantity"]
 		);
 		$_SESSION["shopping_cart"][0] = $item_array;
 	}
