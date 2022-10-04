@@ -52,45 +52,51 @@ if (isset($_GET['id'])) {
 
     <div class="site-section">
       <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <img src="images/<?php echo $fila[2]; ?>" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-md-6">
-            <h2 class="text-black"><?php echo $fila[1]; ?></h2>
-            <p><?php echo $fila[4]; ?></p>
-            <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis illum hic magni iste, velit aperiam quis.</p>
-            <p><strong class="text-primary h4">L<?php echo $fila[3]; ?></strong></p>
-            <div class="mb-1 d-flex">
-              <label for="option-sm" class="d-flex mr-3 mb-3">
-                <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
-              </label>
-              <label for="option-md" class="d-flex mr-3 mb-3">
-                <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
-              </label>
-              <label for="option-lg" class="d-flex mr-3 mb-3">
-                <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
-              </label>
-              <label for="option-xl" class="d-flex mr-3 mb-3">
-                <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-xl" name="shop-sizes"></span> <span class="d-inline-block text-black"> Extra Large</span>
-              </label>
+        <form method="post" action="shop-single.php?action=add&id=<?php echo $fila[0]; ?>">
+          <div class="row">
+            <div class="col-md-6">
+              <img src="images/<?php echo $fila[2]; ?>" alt="Image" class="img-fluid">
             </div>
-            <div class="mb-5">
-              <div class="input-group mb-3" style="max-width: 120px;">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+            <div class="col-md-6">
+              <h2 class="text-black"><?php echo $fila[1]; ?></h2>
+              <p><?php echo $fila[4]; ?></p>
+              <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis illum hic magni iste, velit aperiam quis.</p>
+              <p><strong class="text-primary h4">L<?php echo $fila[3]; ?></strong></p>
+              <div class="mb-1 d-flex">
+                <label for="option-sm" class="d-flex mr-3 mb-3">
+                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
+                </label>
+                <label for="option-md" class="d-flex mr-3 mb-3">
+                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
+                </label>
+                <label for="option-lg" class="d-flex mr-3 mb-3">
+                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
+                </label>
+                <label for="option-xl" class="d-flex mr-3 mb-3">
+                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-xl" name="shop-sizes"></span> <span class="d-inline-block text-black"> Extra Large</span>
+                </label>
+              </div>
+              <div class="mb-5">
+                <div class="input-group mb-3" style="max-width: 120px;">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                  </div>
+                  <input type="text" class="form-control text-center" value="1" placeholder="" name="quantity" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                  </div>
                 </div>
-                <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                </div>
+
               </div>
 
-            </div>
-            <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Agregar al carrito</a></p>
+              <input type="hidden" name="hidden_image" value="<?php echo $fila[2]; ?>">
+              <input type="hidden" name="hidden_name" value="<?php echo $fila[1]; ?>">
+              <input type="hidden" name="hidden_price" value="<?php echo $fila[3]; ?>">
 
+              <input type="submit" name="add_to_cart" class="btn" value="Agregar al carrito">
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
 
